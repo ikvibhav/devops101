@@ -1,0 +1,67 @@
+# Specify the version of the Docker Compose file format
+version: "3.9"
+
+# Defines the services(containers) that will be run
+services:
+
+  # Defines a service named db
+  # The db service uses the official PostgreSQL image
+  # Sets environment variables for the database name, user, and password
+  # Mounts a namd volume (pgdata) to persist database data
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: metricsdb
+      POSTGRES_USER: metricsuser
+      POSTGRES_PASSWORD: metricspass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: metricsdb
+      DB_USER: metricsuser
+      DB_PASS: metricspass
+    networks:
+      - monitor-net
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - monitor-net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - monitor-net
+
+volumes:
+  pgdata:
+  grafana-data:
+  pgadmin-data:
+
+networks:
+  monitor-net:

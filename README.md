@@ -13,7 +13,7 @@
     and representing database tables as python classes and rows as python objects
 4. Migrations
     1. Migrations are ways to propogate changes made in models (Python classes represnting DB tables) into database schemas
-10. Useful Commands -
+5. Useful Commands -
     To start new project -
     ```
     django-admin startproject <PROJECT_NAME>
@@ -37,4 +37,9 @@
     To apply django migrations. Fromproject directory -
     ```
     python manage.py migrate
+    ```
+
+    To create django users -
+    ```
+    python manage.py createsuperuser
     ```
