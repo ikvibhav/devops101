@@ -1,0 +1,16 @@
+@startuml
+
+title FastAPI Monitor Architecture
+
+node "Docker Compose Network (monitor-net)" {
+    [backend]
+    [db]
+    [grafana]
+    [pgadmin]
+}
+
+backend --> db : connects to
+grafana --> db : reads metrics from
+pgadmin --> db : manages
+
+@enduml

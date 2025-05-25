@@ -16,6 +16,8 @@ services:
       POSTGRES_PASSWORD: metricspass
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - monitor-net
   
   backend:
     build: .
@@ -31,6 +33,7 @@ services:
       DB_PASS: metricspass
     networks:
       - monitor-net
+    entrypoint: ["/wait-for-it.sh", "db:5432", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   grafana:
     image: grafana/grafana
@@ -49,12 +52,14 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
     ports:
       - "5050:80"
     depends_on:
       - db
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
     networks:
       - monitor-net
 

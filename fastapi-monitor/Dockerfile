@@ -9,6 +9,10 @@ WORKDIR /app
 # Copies everything from local app directory to the /app directory in the container
 COPY app/ .
 
+# Ensures that postgres backend starts only after the database db is ready
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 # Installs python dependencies from requirements.txt using pip
 # --no-cache-dir option is used to avoid caching the installed packages 
 # which helps to keep the image size smaller

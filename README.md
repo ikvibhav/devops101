@@ -1,45 +1,17 @@
-# Tech Stack and Definitions
+# Applications
+This repository has the following applicationss
+1. django101
+2. fastapi-monitor
 
-## Django
-1. Files - 
-    1. asgi.py and wsgi.py - Allows to communicate with the folder
-    2. settings.py - Go here when trying to install various django applications settings
-    3. urls.py - Used to route various URLs to different routes
-    4. manage.py - Manage application, create database server, manage URLS etc
-2. Apps -
-    1. In django, app is a modular component of project responsible for a specific piece of functionality
-3. ORM (Object Relational Mapping) -
-    1. ORM in python refers to a programming technique that iteracts with relational databases (PostGreSQL, MySQL etc)
-    and representing database tables as python classes and rows as python objects
-4. Migrations
-    1. Migrations are ways to propogate changes made in models (Python classes represnting DB tables) into database schemas
-5. Useful Commands -
-    To start new project -
-    ```
-    django-admin startproject <PROJECT_NAME>
-    ```
+## django101
+1. A sampled repository to play around with django
 
-    To create a new app -
-    ```
-    python manage.py startapp <APP_NAME>
-    ```
+## fastapi-monitor
+1. A containerized modular application that is used to visualise CPU and Memory usage of a device on Grafana
+2. A multi-container architecture is followed with -
+    1. FASTAPI (Backend)
+    2. POSTGRESQL (Database)
+    3. Grafana (Visualization)
+    4. PGAdmin (DB Management)
 
-    To run a django server -
-    ```
-    python manage.py runserver
-    ```
-
-    To make django migrations. Fromproject directory -
-    ```
-    python manage.py makemigrations
-    ```
-
-    To apply django migrations. Fromproject directory -
-    ```
-    python manage.py migrate
-    ```
-
-    To create django users -
-    ```
-    python manage.py createsuperuser
-    ```
+![Image](./fastapi-monitor/docs/architecture.png)
